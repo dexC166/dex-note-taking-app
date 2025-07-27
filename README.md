@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-    <a href="fsafasdf" target="_blank">
+    <a href="https://dex-note-taking-app.onrender.com/" target="_blank">
       <img src="./frontend/public/project-banner.png" alt="Project Banner">
     </a>
   <br />
@@ -54,7 +54,7 @@ My entire development journey of this app was shaped by the insights, best pract
 - **`Full-Stack MERN App`**: MongoDB, Express.js, React, Node.js
 - **`CRUD Notes`**: Create, read, update, and delete notes with title & description
 - **`REST API`**: Fully functional backend endpoints using Express & Mongoose
-- **`Rate Limiting`**: Upstash Redis protection from abuse—real-world concept
+- **`Rate Limiting`**: Upstash Redis protection from abuse real-world concept
 - **`Responsive UI`**: Tailwind CSS, DaisyUI & Lucide icons for modern styling
 - **`Beginner Friendly`**: Clean code, clear structure, plenty of learning opportunities
 - **`Tested API`**: Try endpoints with Postman or your favorite REST client
