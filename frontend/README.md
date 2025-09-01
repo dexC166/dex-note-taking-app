@@ -1,12 +1,36 @@
-# React + Vite
+# Dex-Note-Taking-App Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React frontend for the Dex-Note-Taking-App, built with Vite and Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+The app will be available at http://localhost:5173
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- **React 19** - Latest React with hooks
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **DaisyUI** - Component library for Tailwind
+- **React Router** - Client-side routing
+- **Axios** - HTTP client for API calls
+- **React Hot Toast** - Toast notifications
+
+## 📱 Features
+
+- Create, read, update, and delete notes
+- Responsive design for all devices
+- Real-time API integration
+- Rate limiting protection
+- Modern UI with dark theme
+
+## 🚢 Deployment
+
+For deployment instructions, see the main [Deployment Guide](../DEPLOYMENT_GUIDE.md).
+
+This frontend is configured to deploy on Vercel with automatic API proxying to the Fly.io backend.

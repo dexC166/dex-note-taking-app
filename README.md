@@ -58,7 +58,7 @@ My entire development journey of this app was shaped by the insights, best pract
 - **`Responsive UI`**: Tailwind CSS, DaisyUI & Lucide icons for modern styling
 - **`Beginner Friendly`**: Clean code, clear structure, plenty of learning opportunities
 - **`Tested API`**: Try endpoints with Postman or your favorite REST client
-- **`Deployment Ready`**: Instructions included for live hosting
+- **`Deployment Ready`**: Multiple deployment options with detailed guides
 
 ---
 
@@ -173,7 +173,7 @@ Create a `.env` file inside the `backend/` folder with the following:
 
 ```env
 MONGO_URI=<your_mongo_uri>
-PORT=5001
+PORT=8080
 
 UPSTASH_REDIS_REST_URL=<your_redis_rest_url>
 UPSTASH_REDIS_REST_TOKEN=<your_redis_rest_token>
@@ -189,7 +189,7 @@ npm install
 npm run dev
 ```
 
-By default, the Express server will run on http://localhost:3000.
+By default, the Express server will run on http://localhost:8080.
 
 ### 4. Start the Frontend
 
@@ -212,12 +212,26 @@ You can now create, edit, and delete notes via the UI!
 
 - 🛠️ [Architecture Overview](./architecture.md)
 - 🔄 [User Flow Diagram](./flowchart.md)
+- 🚀 [Deployment Guide](./DEPLOYMENT_GUIDE.md)
 
 ---
 
 ## <a name="deployment">🚢 Deployment</a>
 
-The entire app is hosted on Render.com as two coordinated services **`Backend (Express API)`**, and **`Frontend (React + Vite)`**. Whenever you push to your main branch, Render will automatically rebuild and redeploy both services, and your React app will talk to the live Express API.
+This app can be deployed using multiple platforms. We've prepared a comprehensive deployment guide for **Vercel + Fly.io** (free tier alternative to Render).
+
+### 🆓 Free Tier Deployment (Recommended)
+
+- **Frontend**: Vercel (React + Vite)
+- **Backend**: Fly.io (Express API)
+- **Database**: MongoDB Atlas
+- **Rate Limiting**: Upstash Redis
+
+📖 **[View Complete Deployment Guide →](./DEPLOYMENT_GUIDE.md)**
+
+### 🚀 Alternative: Render.com
+
+The entire app can also be hosted on Render.com as two coordinated services **`Backend (Express API)`**, and **`Frontend (React + Vite)`**. Whenever you push to your main branch, Render will automatically rebuild and redeploy both services.
 
 ---
 

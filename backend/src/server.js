@@ -1,23 +1,33 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import path from "path";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import path from 'path';
 
-import notesRoutes from "./routes/notesRoutes.js";
-import { connectDB } from "./config/db.js";
-import rateLimiter from "./middleware/rateLimiter.js";
+import notesRoutes from './routes/notesRoutes.js';
+import { connectDB } from './config/db.js';
+import rateLimiter from './middleware/rateLimiter.js';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 8080;
 const __dirname = path.resolve();
 
 // middleware
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: 'http://localhost:5173',
+    })
+  );
+} else {
+  app.use(
+    cors({
+      origin: [
+        'https://dex-note-taking-app.vercel.app',
+        'https://dex-note-taking-app-git-main.vercel.app',
+      ],
+      credentials: true,
     })
   );
 }
@@ -30,18 +40,23 @@ app.use(rateLimiter);
 //   next();
 // });
 
-app.use("/api/notes", notesRoutes);
+// Health check endpoint for Fly.io
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use('/api/notes', notesRoutes);
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend', 'dist', 'index.html'));
   });
 }
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server started on PORT:", PORT);
+    console.log('Server started on PORT:', PORT);
   });
 });
