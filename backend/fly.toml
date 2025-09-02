@@ -1,4 +1,4 @@
-app = "dex-notes-backend"
+app = "dex-note-taking-app-backend"
 primary_region = "iad"
 
 [build]

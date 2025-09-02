@@ -12,7 +12,7 @@ This guide will walk you through deploying your Dex-Note-Taking-App using:
 2. **Vercel Account** - Sign up at [vercel.com](https://vercel.com)
 3. **Fly.io Account** - Sign up at [fly.io](https://fly.io)
 4. **MongoDB Atlas Account** - Sign up at [mongodb.com/atlas](https://mongodb.com/atlas)
-5. **Upstash Account** - Sign up at [upstash.com](https://upstash.com)
+5. **Upstash Account** - Sign up at [upstash.com](https://upstash.com) (for rate limiting)
 
 ## 🔧 Step 1: Deploy Backend to Fly.io
 
@@ -29,11 +29,21 @@ curl -L https://fly.io/install.sh | sh
 curl -L https://fly.io/install.sh | sh
 ```
 
+**Can I skip this step?** If you've already installed Fly CLI for a previous project on the same PC, you can skip this step. The Fly CLI is installed system-wide and available for all projects.
+
 ### 1.2 Login to Fly.io
 
 ```bash
 fly auth login
 ```
+
+**Can I skip this step?** If you've already logged in for a previous project, your authentication token should still be active. You can verify your login status by running:
+
+```bash
+fly auth whoami
+```
+
+If it shows your Fly.io email address, you're all set! You can proceed directly to Step 1.3.
 
 ### 1.3 Navigate to Backend Directory
 
@@ -41,7 +51,82 @@ fly auth login
 cd backend
 ```
 
-### 1.4 Set Environment Variables
+### 1.4 Create Required Configuration Files
+
+Before deploying to Fly.io, you need to create several configuration files in your backend directory:
+
+#### 1.4.1 Create `fly.toml` File
+
+Create a `fly.toml` file in your backend directory:
+
+```toml
+app = "your-app-name-backend"
+primary_region = "iad"
+
+[build]
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[http_service.checks]
+  [http_service.checks.health]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"
+```
+
+**Important**: Replace `your-app-name-backend` with your actual app name.
+
+#### 1.4.2 Create `Dockerfile`
+
+Create a `Dockerfile` in your backend directory:
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["npm", "start"]
+```
+
+#### 1.4.3 Update Backend `package.json` Scripts
+
+Make sure your **backend** `package.json` has a start script:
+
+```json
+{
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  }
+}
+```
+
+**Important**: This is the `package.json` file in your `backend/` directory, not the root or frontend `package.json`.
+
+### 1.5 Set Environment Variables
 
 Create a `.env` file in the backend directory:
 
@@ -53,26 +138,110 @@ UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_token
 NODE_ENV=production
 ```
 
-### 1.5 Deploy to Fly.io
+**Note**: This `.env` file is for local development only. For production deployment, you'll set these as secrets in Fly.io.
+
+**What is Upstash Redis?** Upstash Redis is used for rate limiting - it prevents users from making too many requests to your API (protects against spam/abuse). It's optional but recommended for production apps.
+
+### 1.6 Create Fly.io App
+
+First, create the app with a unique name:
+
+```bash
+fly apps create appName-backend
+```
+
+**Important**: When prompted:
+
+- Choose a unique app name (e.g., `appName-backend`)
+- Select a region close to you (e.g., `iad` for Virginia, `lax` for Los Angeles)
+
+### 1.7 Set Fly.io Secrets
+
+Before deploying, you must set your environment variables as secrets in Fly.io:
+
+```bash
+fly secrets set MONGO_URI="your_mongodb_atlas_connection_string"
+fly secrets set UPSTASH_REDIS_REST_URL="your_upstash_redis_url"
+fly secrets set UPSTASH_REDIS_REST_TOKEN="your_upstash_redis_token"
+fly secrets set NODE_ENV="production"
+fly secrets set PORT="8080"
+```
+
+**Important**: Replace the values in quotes with your actual credentials. These secrets are encrypted and secure.
+
+### 1.8 Deploy to Fly.io
+
+Now deploy your app:
 
 ```bash
 fly deploy
 ```
 
-**Important**: When prompted:
+**Note**: The app name in your `fly.toml` file should match the app you just created.
 
-- Choose a unique app name (e.g., `dex-notes-backend-yourname`)
-- Select a region close to you
-- Choose "Yes" for deploying immediately
+**Important**: If you encounter PATH issues on Windows, you have two options:
 
-### 1.6 Verify Deployment
+**Option 1: Use Full Path (Immediate Solution)**
+
+```bash
+C:\Users\YourUsername\.fly\bin\fly.exe deploy
+C:\Users\YourUsername\.fly\bin\fly.exe status
+C:\Users\YourUsername\.fly\bin\fly.exe logs
+```
+
+**Option 2: Fix PATH Permanently (Recommended)**
+
+1. Add `C:\Users\YourUsername\.fly\bin` to your Windows account environment variable PATH
+2. Restart your PC completely
+3. Open a new PowerShell terminal
+4. Test with: `fly deploy`, `fly status`, `fly logs`
+
+**Note**: After fixing the PATH and restarting, the `fly` command will work in all new terminal sessions without needing the full path.
+
+### 1.9 Verify Deployment
 
 ```bash
 fly status
 fly logs
 ```
 
+**Important**: If your app shows as "stopped" or has health check failures, you may need to restart the machine to pick up new environment variables:
+
+```bash
+# Get the machine ID from fly status, then restart it
+fly machine restart MACHINE_ID
+```
+
 Your backend will be available at: `https://your-app-name.fly.dev`
+
+### 1.10 Test API Endpoints
+
+Verify your backend is working correctly by testing the API endpoints:
+
+**Method 1: Browser Testing (Easiest)**
+Visit these URLs in your browser:
+
+- **Root API Info**: `https://your-app-name.fly.dev/`
+- **Health Check**: `https://your-app-name.fly.dev/health`
+- **Notes API**: `https://your-app-name.fly.dev/api/notes`
+
+**Method 2: Command Line Testing**
+
+```bash
+# Test health endpoint
+curl https://your-app-name.fly.dev/health
+
+# Test notes endpoint
+curl https://your-app-name.fly.dev/api/notes
+```
+
+**Expected Results:**
+
+- **Health Check**: Should return `{"status":"OK","timestamp":"..."}`
+- **Notes API**: Should return an array of notes (may be empty initially)
+- **Root Endpoint**: Should return API information with available endpoints
+
+**Troubleshooting**: If endpoints return errors, check the logs with `fly logs` and ensure the machine is running with `fly status`.
 
 ## 🌐 Step 2: Deploy Frontend to Vercel
 
@@ -143,8 +312,63 @@ In your deployed frontend, make sure the axios configuration points to your Fly.
    - Make sure your backend listens on the correct port
 
 4. **Database Connection**
+
    - Verify MongoDB Atlas connection string
    - Check IP whitelist in MongoDB Atlas
+
+5. **Upstash Redis Connection Issues**
+
+   - **Problem**: Rate limiter fails with "ENOTFOUND" errors
+   - **Cause**: Upstash Redis database was deleted due to inactivity
+   - **Solution**:
+     - Create a new Upstash Redis database
+     - Update your secrets with the new URL and token:
+       ```bash
+       fly secrets set UPSTASH_REDIS_REST_URL="your-new-redis-url"
+       fly secrets set UPSTASH_REDIS_REST_TOKEN="your-new-redis-token"
+       ```
+     - Restart the machine to apply new secrets:
+       ```bash
+       fly machine restart MACHINE_ID
+       ```
+
+6. **Machine Restart Required**
+   - **When**: After updating secrets or environment variables
+   - **Why**: Running containers don't automatically pick up new secrets
+   - **How**:
+     ```bash
+     fly status  # Get machine ID
+     fly machine restart MACHINE_ID
+     ```
+
+### Windows-Specific Issues:
+
+7. **Fly Command Not Recognized**
+
+   - **Problem**: `fly` command not found in new terminal sessions
+   - **Cause**: Fly.io installer doesn't properly update system PATH on Windows
+   - **Solutions**:
+     - **Option 1**: Use full path to execute commands (immediate solution):
+       ```bash
+       C:\Users\YourUsername\.fly\bin\fly.exe deploy
+       C:\Users\YourUsername\.fly\bin\fly.exe status
+       C:\Users\YourUsername\.fly\bin\fly.exe logs
+       ```
+     - **Option 2**: Fix PATH permanently (recommended):
+       1. Add `C:\Users\YourUsername\.fly\bin` to your Windows account environment variable PATH
+       2. **Restart your PC completely** (not just the terminal)
+       3. Open a new PowerShell terminal
+       4. Test with `fly deploy`, `fly status`, `fly logs`
+     - **Option 3**: Reinstall Fly CLI in each new session (temporary):
+       ```bash
+       iwr https://fly.io/install.ps1 -useb | iex
+       ```
+
+8. **PATH Environment Variable Issues**
+
+   - **Incorrect**: `C:\Users\YourUsername\.fly\bin\fly.exe` (points to file)
+   - **Correct**: `C:\Users\YourUsername\.fly\bin` (points to directory)
+   - **Fix**: Update PATH to point to the directory, not the executable file
 
 ### Useful Fly.io Commands:
 
@@ -153,6 +377,7 @@ fly logs                    # View application logs
 fly status                  # Check app status
 fly secrets list           # List environment variables
 fly secrets set KEY=value  # Set environment variable
+fly machine restart ID     # Restart machine to apply new secrets
 fly scale count 1          # Scale to 1 instance (free tier)
 ```
 
@@ -174,6 +399,12 @@ fly scale count 1          # Scale to 1 instance (free tier)
 
 - 512MB storage
 - Shared clusters
+
+### Upstash Redis:
+
+- 10,000 requests/day
+- 256MB storage
+- Rate limiting for API protection
 
 ## 🎉 Success!
 

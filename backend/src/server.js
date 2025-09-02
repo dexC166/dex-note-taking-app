@@ -47,13 +47,17 @@ app.get('/health', (req, res) => {
 
 app.use('/api/notes', notesRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend', 'dist', 'index.html'));
+// Root endpoint for API info
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Dex Note Taking App Backend API',
+    endpoints: {
+      health: '/health',
+      notes: '/api/notes',
+    },
+    timestamp: new Date().toISOString(),
   });
-}
+});
 
 connectDB().then(() => {
   app.listen(PORT, () => {
