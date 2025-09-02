@@ -14,6 +14,14 @@ This guide will walk you through deploying your Dex-Note-Taking-App using:
 4. **MongoDB Atlas Account** - Sign up at [mongodb.com/atlas](https://mongodb.com/atlas)
 5. **Upstash Account** - Sign up at [upstash.com](https://upstash.com) (for rate limiting)
 
+## 📁 Required Files
+
+Before starting deployment, ensure you have these configuration files in your project:
+
+- **`backend/fly.toml`** - Fly.io deployment configuration
+- **`backend/Dockerfile`** - Container configuration for Fly.io
+- **`frontend/vercel.json`** - Vercel deployment and routing configuration
+
 ## 🔧 Step 1: Deploy Backend to Fly.io
 
 ### 1.1 Install Fly CLI
@@ -255,26 +263,51 @@ Make sure your code is in a GitHub repository.
 2. Click "New Project"
 3. Import your GitHub repository
 4. Configure the project:
-   - **Framework Preset**: Vite
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
+   - **Framework Preset**: Vite (tells Vercel you're using Vite as your build tool)
+   - **Root Directory**: `frontend` (tells Vercel where your frontend code is located)
+   - **Build Command**: `npm run build` (command to compile your code for production)
+   - **Output Directory**: `dist` (folder where the compiled files will be stored)
+   - **Install Command**: `npm install` (command to install your project dependencies)
+5. **Important**: Expand the "Environment Variables" section and add:
+   - **Name**: `VITE_API_URL`
+   - **Value**: `https://your-app-name-backend.fly.dev`
 
-### 2.3 Update Vercel Configuration
+### 2.3 Create Vercel Configuration
 
-Update the `vercel.json` file with your actual Fly.io backend URL:
+Create a `vercel.json` file in your frontend directory:
 
 ```json
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "https://YOUR-FLY-APP-NAME.fly.dev/api/$1"
     }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
   ]
 }
 ```
+
+**Important**: Replace `YOUR-FLY-APP-NAME` with your actual Fly.io app name (e.g., `dex-note-taking-app-backend`).
+
+**What this file does:**
+
+- **rewrites**: Routes API calls from your frontend to your Fly.io backend
+- **headers**: Sets CORS headers to allow communication between Vercel and Fly.io
+- **buildCommand/outputDirectory**: Tells Vercel how to build your Vite project
 
 ### 2.4 Deploy
 
@@ -282,15 +315,45 @@ Click "Deploy" in Vercel. Your frontend will be deployed automatically.
 
 ## 🔗 Step 3: Update Frontend Configuration
 
-### 3.1 Update Backend URL
+### 3.1 Update Frontend Axios Configuration
 
-In your deployed frontend, make sure the axios configuration points to your Fly.io backend.
+Your frontend needs to know where your backend API is located. Update the axios configuration:
+
+**File**: `frontend/src/lib/axios.js`
+
+```javascript
+import axios from 'axios';
+
+// in production, there's no localhost so we have to make this dynamic
+const BASE_URL =
+  import.meta.env.MODE === 'development' ? 'http://localhost:8080/api' : '/api';
+
+const api = axios.create({
+  baseURL: BASE_URL,
+});
+
+export default api;
+```
+
+**What this does:**
+
+- **Development**: Uses `http://localhost:8080/api` (your local backend)
+- **Production**: Uses `/api` (which gets routed to your Fly.io backend via `vercel.json`)
+
+**Important**: This configuration should already be correct if you followed the guide. The `/api` path will be automatically routed to your Fly.io backend through the `vercel.json` rewrites we set up.
 
 ### 3.2 Test the Connection
 
-1. Create a new note
-2. Check if it appears in your MongoDB Atlas database
-3. Verify all CRUD operations work
+1. **Visit your deployed frontend** (Vercel URL)
+2. **Create a new note** using the UI
+3. **Check your MongoDB Atlas database** to verify the note was saved
+4. **Test all CRUD operations**:
+   - Create a note
+   - Edit a note
+   - Delete a note
+   - View notes list
+
+**Expected Result**: All operations should work seamlessly between your Vercel frontend and Fly.io backend.
 
 ## 🚨 Troubleshooting
 

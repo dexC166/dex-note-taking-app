@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://dex-notes-backend.fly.dev/api/$1"
+      "destination": "https://dex-note-taking-app-backend.fly.dev/api/$1"
     }
   ],
   "headers": [

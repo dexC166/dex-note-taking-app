@@ -218,7 +218,7 @@ You can now create, edit, and delete notes via the UI!
 
 ## <a name="deployment">🚢 Deployment</a>
 
-This app can be deployed using multiple platforms. We've prepared a comprehensive deployment guide for **Vercel + Fly.io** (free tier alternative to Render).
+This app can be deployed using multiple platforms. I've prepared a **complete and comprehensive deployment guide** for **Vercel + Fly.io** (free tier alternative to Render).
 
 ### 🆓 Free Tier Deployment (Recommended)
 
@@ -228,6 +228,15 @@ This app can be deployed using multiple platforms. We've prepared a comprehensiv
 - **Rate Limiting**: Upstash Redis
 
 📖 **[View Complete Deployment Guide →](./DEPLOYMENT_GUIDE.md)**
+
+**What's included in the guide:**
+
+- ✅ Step-by-step configuration file creation (`fly.toml`, `Dockerfile`, `vercel.json`)
+- ✅ Environment variable setup and secrets management
+- ✅ API endpoint testing and verification
+- ✅ Troubleshooting common deployment issues
+- ✅ Machine restart procedures for Fly.io
+- ✅ Complete beginner-friendly explanations
 
 ### 🚀 Alternative: Render.com
 
