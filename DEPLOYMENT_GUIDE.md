@@ -1,5 +1,7 @@
 # 🚀 Deployment Guide: Vercel + Fly.io
 
+---
+
 This guide will walk you through deploying your Dex-Note-Taking-App using:
 
 - **Frontend**: Vercel (free tier)
@@ -21,6 +23,8 @@ Before starting deployment, ensure you have these configuration files in your pr
 - **`backend/fly.toml`** - Fly.io deployment configuration
 - **`backend/Dockerfile`** - Container configuration for Fly.io
 - **`frontend/vercel.json`** - Vercel deployment and routing configuration
+
+---
 
 ## 🔧 Step 1: Deploy Backend to Fly.io
 
@@ -342,18 +346,43 @@ export default api;
 
 **Important**: This configuration should already be correct if you followed the guide. The `/api` path will be automatically routed to your Fly.io backend through the `vercel.json` rewrites we set up.
 
-### 3.2 Test the Connection
+### 3.2 Push Changes to GitHub
 
-1. **Visit your deployed frontend** (Vercel URL)
-2. **Create a new note** using the UI
-3. **Check your MongoDB Atlas database** to verify the note was saved
-4. **Test all CRUD operations**:
+Before testing, you need to push your local changes to GitHub so Vercel can redeploy with the updated configuration:
+
+```bash
+# Stage all changes
+git add .
+
+# Commit with a descriptive message
+git commit -m "Update deployment configuration files"
+
+# Push to GitHub (this will trigger Vercel redeploy)
+git push origin main
+```
+
+**What this does:**
+
+- **Stages your changes** (including updated `vercel.json`)
+- **Commits the changes** with a descriptive message
+- **Pushes to GitHub** which automatically triggers Vercel to redeploy
+- **Updates the routing** so your frontend can connect to your backend
+
+### 3.3 Test the Connection
+
+1. **Wait 2-3 minutes** for Vercel to complete the redeploy
+2. **Visit your deployed frontend** (Vercel URL)
+3. **Create a new note** using the UI
+4. **Check your MongoDB Atlas database** to verify the note was saved
+5. **Test all CRUD operations**:
    - Create a note
    - Edit a note
    - Delete a note
    - View notes list
 
 **Expected Result**: All operations should work seamlessly between your Vercel frontend and Fly.io backend.
+
+---
 
 ## 🚨 Troubleshooting
 
@@ -444,6 +473,8 @@ fly machine restart ID     # Restart machine to apply new secrets
 fly scale count 1          # Scale to 1 instance (free tier)
 ```
 
+---
+
 ## 💰 Free Tier Limits
 
 ### Vercel:
@@ -469,12 +500,16 @@ fly scale count 1          # Scale to 1 instance (free tier)
 - 256MB storage
 - Rate limiting for API protection
 
+---
+
 ## 🎉 Success!
 
 Once deployed, your app will be available at:
 
 - **Frontend**: `https://your-app-name.vercel.app`
 - **Backend**: `https://your-app-name.fly.dev`
+
+---
 
 ## 🔄 Continuous Deployment
 
