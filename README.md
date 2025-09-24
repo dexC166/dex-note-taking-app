@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://dex-note-taking-app.onrender.com/" target="_blank">
-      <img src="./frontend/public/project-banner.png" alt="Project Banner">
+      <kbd><img src="./frontend/public/project-banner.png" alt="Project Banner"></kbd>
     </a>
   <br />
 
@@ -30,7 +30,7 @@
 
 This project, Dex-Note-Taking-App, is a hands-on, ground-up build I created to master the MERN stack (MongoDB, Express, React, Node) and hone modern full-stack development skills.
 
-My entire development journey of this app was shaped by the insights, best practices, and tutorials of [burakorkmez (codesistency on YouTube)](https://www.youtube.com/@codesistency). A heartfelt thank you for the guidance and inspiration! 🙌
+While I started this journey following the excellent tutorials of [burakorkmez (codesistency on YouTube)](https://www.youtube.com/@codesistency), I quickly delved off the beaten path to make this app truly mine. Through extensive experimentation, customizations, and iterative improvements, I've transformed the initial tutorial code into a personalized learning experience that reflects my growth as a developer. This is where the real learning happens when you take the foundation and build your own! 🙌
 
 ---
 
@@ -55,7 +55,8 @@ My entire development journey of this app was shaped by the insights, best pract
 - **`CRUD Notes`**: Create, read, update, and delete notes with title & description
 - **`REST API`**: Fully functional backend endpoints using Express & Mongoose
 - **`Rate Limiting`**: Upstash Redis protection from abuse real-world concept
-- **`Responsive UI`**: Tailwind CSS, DaisyUI & Lucide icons for modern styling
+- **`Mobile-First Responsive UI`**: Tailwind CSS, DaisyUI & Lucide icons optimized for all screen sizes
+- **`Enhanced UX`**: Improved mobile experience with adaptive layouts and touch-friendly interactions
 - **`Beginner Friendly`**: Clean code, clear structure, plenty of learning opportunities
 - **`Tested API`**: Try endpoints with Postman or your favorite REST client
 - **`Deployment Ready`**: Multiple deployment options with detailed guides
@@ -263,7 +264,8 @@ Thanks again to **burakorkmez (codesistency)** for the detailed video tutorials,
 
 ## <a name="note">📌 Note</a>
 
-This app was originally built by following @codesistency’s YouTube tutorial for learning and inspiration.  
-The project was developed entirely in my local IDE (outside of GitHub) without initializing git, and I’ve reconstructed the commit history solely to reflect a realistic development flow and demonstrate my understanding of fullstack architecture and recent modifications, not as a record of the actual chronological build.
+This app started as a learning project following @codesistency's excellent YouTube tutorial, but quickly evolved into something uniquely mine. Through countless hours of experimentation, customization, and iterative improvements, I've transformed the initial tutorial code into a personalized showcase of my growth as a developer. The real magic happens when you take the foundation and build something that reflects your own vision and learning journey.
+
+The project was developed entirely in my local IDE (outside of GitHub) without initializing git, and I've reconstructed the commit history solely to reflect a realistic development flow and demonstrate my understanding of fullstack architecture and recent modifications, not as a record of the actual chronological build.
 
 ---

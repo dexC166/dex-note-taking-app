@@ -79,6 +79,7 @@ primary_region = "iad"
 
 [env]
   PORT = "8080"
+  NODE_ENV = "production"
 
 [http_service]
   internal_port = 8080
@@ -88,18 +89,17 @@ primary_region = "iad"
   min_machines_running = 0
   processes = ["app"]
 
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/health"
+
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
   memory_mb = 256
-
-[http_service.checks]
-  [http_service.checks.health]
-    grace_period = "10s"
-    interval = "30s"
-    method = "GET"
-    timeout = "5s"
-    path = "/health"
 ```
 
 **Important**: Replace `your-app-name-backend` with your actual app name.
@@ -113,13 +113,23 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm ci --only=production
 
+# Copy source code
 COPY . .
 
+# Expose port
 EXPOSE 8080
 
+# Health check endpoint
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:8080/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"
+
+# Start the application
 CMD ["npm", "start"]
 ```
 
@@ -137,6 +147,19 @@ Make sure your **backend** `package.json` has a start script:
 ```
 
 **Important**: This is the `package.json` file in your `backend/` directory, not the root or frontend `package.json`.
+
+#### 1.4.4 Add Health Check Endpoint to `backend/src/server.js`
+
+Add a health endpoint used by Fly.io checks (if not already present):
+
+```javascript
+// Health check endpoint for Fly.io
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+```
+
+This path must match the `path` in `fly.toml` and the Dockerfile `HEALTHCHECK`.
 
 ### 1.5 Set Environment Variables
 
@@ -219,10 +242,18 @@ fly logs
 
 **Important**: If your app shows as "stopped" or has health check failures, you may need to restart the machine to pick up new environment variables:
 
-```bash
-# Get the machine ID from fly status, then restart it
-fly machine restart MACHINE_ID
-```
+**Machine Restart Required**
+
+- **When**: After updating secrets or environment variables
+- **Why**: Running containers don't automatically pick up new secrets
+- **How**:
+  ```bash
+  fly status  # Get machine ID
+  fly machine restart MACHINE_ID
+  fly deploy  # Redeploy to ensure all changes are applied
+  fly status  # Verify the machine is running properly
+  fly logs    # Check for any errors or confirm successful startup
+  ```
 
 Your backend will be available at: `https://your-app-name.fly.dev`
 
@@ -288,7 +319,7 @@ Create a `vercel.json` file in your frontend directory:
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://YOUR-FLY-APP-NAME.fly.dev/api/$1"
+      "destination": "https://YOUR-FLY-APP-NAME-backend.fly.dev/api/$1"
     }
   ],
   "headers": [
@@ -422,6 +453,9 @@ git push origin main
      - Restart the machine to apply new secrets:
        ```bash
        fly machine restart MACHINE_ID
+       fly deploy  # Redeploy to ensure all changes are applied
+       fly status  # Verify the machine is running properly
+       fly logs    # Check for any errors or confirm successful startup
        ```
 
 6. **Machine Restart Required**
@@ -431,6 +465,9 @@ git push origin main
      ```bash
      fly status  # Get machine ID
      fly machine restart MACHINE_ID
+     fly deploy  # Redeploy to ensure all changes are applied
+     fly status  # Verify the machine is running properly
+     fly logs    # Check for any errors or confirm successful startup
      ```
 
 ### Windows-Specific Issues:

@@ -44,25 +44,33 @@ const CreatePage = () => {
 
   return (
     <div className="min-h-screen bg-base-200">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         <div className="max-w-2xl mx-auto">
-          <Link to={'/'} className="btn btn-ghost mb-6">
-            <ArrowLeftIcon className="size-5" />
-            Back to Notes
+          <Link
+            to={'/'}
+            className="btn btn-ghost btn-sm sm:btn-md mb-4 sm:mb-6"
+          >
+            <ArrowLeftIcon className="size-4 sm:size-5" />
+            <span className="hidden sm:inline">Back to Notes</span>
+            <span className="sm:hidden">Back</span>
           </Link>
 
           <div className="card bg-base-100">
-            <div className="card-body">
-              <h2 className="card-title text-2xl mb-4">Create New Note</h2>
+            <div className="card-body p-3 sm:p-6">
+              <h2 className="card-title text-xl sm:text-2xl mb-4">
+                Create New Note
+              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-control mb-4">
                   <label className="label">
-                    <span className="label-text">Title</span>
+                    <span className="label-text text-sm sm:text-base">
+                      Title
+                    </span>
                   </label>
                   <input
                     type="text"
                     placeholder="Note Title"
-                    className="input input-bordered"
+                    className="input input-bordered input-sm sm:input-md"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
@@ -70,11 +78,13 @@ const CreatePage = () => {
 
                 <div className="form-control mb-4">
                   <label className="label">
-                    <span className="label-text">Content</span>
+                    <span className="label-text text-sm sm:text-base">
+                      Content
+                    </span>
                   </label>
                   <textarea
                     placeholder="Write your note here..."
-                    className="textarea textarea-bordered h-32"
+                    className="textarea textarea-bordered h-24 sm:h-32 text-sm sm:text-base"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                   />
@@ -83,7 +93,7 @@ const CreatePage = () => {
                 <div className="card-actions justify-end">
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-sm sm:btn-md"
                     disabled={loading}
                   >
                     {loading ? 'Creating...' : 'Create Note'}

@@ -6,13 +6,14 @@ const Navbar = () => {
     <header className="bg-base-300 border-b border-base-content/10">
       <div className="mx-auto max-w-6xl p-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-primary font-mono tracking-tight">
+          <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold text-primary font-mono tracking-tight truncate">
             Dex-Note-Taking-App
           </h1>
-          <div className="flex items-center gap-4">
-            <Link to={'/create'} className="btn btn-primary">
-              <PlusIcon className="size-5" />
-              <span>New Note</span>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Link to={'/create'} className="btn btn-primary btn-sm sm:btn-md">
+              <PlusIcon className="size-4 sm:size-5" />
+              <span className="hidden sm:inline">New Note</span>
+              <span className="sm:hidden">New</span>
             </Link>
           </div>
         </div>
