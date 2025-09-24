@@ -23,26 +23,26 @@ const NoteCard = ({ note, setNotes }) => {
     <Link
       to={`/note/${note._id}`}
       className="card bg-base-100 hover:shadow-lg transition-all duration-200 
-      border-t-4 border-solid border-[#66d9e8] h-full w-full overflow-hidden"
+      border-t-4 border-solid border-[#66d9e8] h-full"
     >
-      <div className="card-body p-2 sm:p-3 md:p-4 w-full">
-        <h3 className="card-title text-base-content text-sm sm:text-base line-clamp-2 break-words">
+      <div className="card-body p-4">
+        <h3 className="card-title text-base-content line-clamp-2">
           {note.title}
         </h3>
-        <p className="text-base-content/70 line-clamp-3 text-xs sm:text-sm break-words">
+        <p className="text-base-content/70 line-clamp-3 text-sm">
           {note.content}
         </p>
-        <div className="card-actions justify-between items-center mt-2 sm:mt-3 md:mt-4 w-full">
-          <span className="text-xs sm:text-sm text-base-content/60 truncate flex-1 min-w-0 mr-2">
+        <div className="card-actions justify-between items-center mt-4">
+          <span className="text-sm text-base-content/60">
             {formatDate(new Date(note.createdAt))}
           </span>
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <PenSquareIcon className="size-3 sm:size-4" />
+          <div className="flex items-center gap-2">
+            <PenSquareIcon className="size-4" />
             <button
-              className="btn btn-ghost btn-xs text-error p-1"
+              className="btn btn-ghost btn-xs text-error"
               onClick={(e) => handleDelete(e, note._id)}
             >
-              <Trash2Icon className="size-3 sm:size-4" />
+              <Trash2Icon className="size-4" />
             </button>
           </div>
         </div>

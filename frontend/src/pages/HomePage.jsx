@@ -38,7 +38,7 @@ const HomePage = () => {
 
       {isRateLimited && <RateLimitedUI />}
 
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
+      <div className="max-w-6xl mx-auto px-4 py-6">
         {loading && (
           <div className="text-center text-primary py-10">Loading notes...</div>
         )}
@@ -46,7 +46,7 @@ const HomePage = () => {
         {notes.length === 0 && !isRateLimited && <NotesNotFound />}
 
         {notes.length > 0 && !isRateLimited && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {notes.map((note) => (
               <NoteCard key={note._id} note={note} setNotes={setNotes} />
             ))}
