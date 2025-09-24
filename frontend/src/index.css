@@ -2,7 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Simple mobile optimization */
-html {
-  overflow-x: hidden;
+/* Mobile-first optimization */
+@layer base {
+  html {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply antialiased;
+  }
+
+  /* Ensure proper text rendering on mobile */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Better touch targets for mobile */
+  .btn {
+    @apply min-h-[2.5rem] min-w-[2.5rem];
+  }
+
+  /* Responsive text truncation */
+  .line-clamp-2,
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
 }

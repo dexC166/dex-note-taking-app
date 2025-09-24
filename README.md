@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-    <a href="https://dex-note-taking-app.onrender.com/" target="_blank">
+    <a href="https://dex-note-taking-app.vercel.app/" target="_blank">
       <kbd><img src="./frontend/public/project-banner.png" alt="Project Banner"></kbd>
     </a>
   <br />

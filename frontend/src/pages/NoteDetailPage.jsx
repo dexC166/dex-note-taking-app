@@ -69,12 +69,12 @@ const NoteDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-base-200 w-full overflow-x-hidden">
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 w-full max-w-full">
-        <div className="max-w-2xl mx-auto w-full">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6 w-full">
+    <div className="min-h-screen bg-base-200">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-4 sm:mb-6">
             <Link to="/" className="btn btn-ghost btn-sm sm:btn-md">
-              <ArrowLeftIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+              <ArrowLeftIcon className="size-4 sm:size-5" />
               <span className="hidden sm:inline">Back to Notes</span>
               <span className="sm:hidden">Back</span>
             </Link>
@@ -82,36 +82,34 @@ const NoteDetailPage = () => {
               onClick={handleDelete}
               className="btn btn-error btn-outline btn-sm sm:btn-md"
             >
-              <Trash2Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Trash2Icon className="size-4 sm:size-5" />
               <span className="hidden sm:inline">Delete Note</span>
               <span className="sm:hidden">Delete</span>
             </button>
           </div>
 
-          <div className="card bg-base-100 w-full">
-            <div className="card-body p-3 sm:p-6 w-full">
-              <div className="form-control mb-4 w-full">
+          <div className="card bg-base-100">
+            <div className="card-body p-4 sm:p-6">
+              <div className="form-control mb-4">
                 <label className="label">
-                  <span className="label-text text-sm sm:text-base">Title</span>
+                  <span className="label-text">Title</span>
                 </label>
                 <input
                   type="text"
                   placeholder="Note title"
-                  className="input input-bordered input-sm sm:input-md w-full"
+                  className="input input-bordered"
                   value={note.title}
                   onChange={(e) => setNote({ ...note, title: e.target.value })}
                 />
               </div>
 
-              <div className="form-control mb-4 w-full">
+              <div className="form-control mb-4">
                 <label className="label">
-                  <span className="label-text text-sm sm:text-base">
-                    Content
-                  </span>
+                  <span className="label-text">Content</span>
                 </label>
                 <textarea
                   placeholder="Write your note here..."
-                  className="textarea textarea-bordered h-24 sm:h-32 text-sm sm:text-base w-full resize-none"
+                  className="textarea textarea-bordered h-32 sm:h-40"
                   value={note.content}
                   onChange={(e) =>
                     setNote({ ...note, content: e.target.value })
@@ -119,13 +117,20 @@ const NoteDetailPage = () => {
                 />
               </div>
 
-              <div className="card-actions justify-end w-full">
+              <div className="card-actions justify-end">
                 <button
-                  className="btn btn-primary btn-sm sm:btn-md"
+                  className="btn btn-primary"
                   disabled={saving}
                   onClick={handleSave}
                 >
-                  {saving ? 'Saving...' : 'Save Changes'}
+                  {saving ? (
+                    <>
+                      <span className="loading loading-spinner loading-sm"></span>
+                      Saving...
+                    </>
+                  ) : (
+                    'Save Changes'
+                  )}
                 </button>
               </div>
             </div>

@@ -25,24 +25,24 @@ const NoteCard = ({ note, setNotes }) => {
       className="card bg-base-100 hover:shadow-lg transition-all duration-200 
       border-t-4 border-solid border-[#66d9e8] h-full"
     >
-      <div className="card-body p-4">
-        <h3 className="card-title text-base-content line-clamp-2">
+      <div className="card-body p-3 sm:p-4">
+        <h3 className="card-title text-base sm:text-lg line-clamp-2">
           {note.title}
         </h3>
-        <p className="text-base-content/70 line-clamp-3 text-sm">
+        <p className="text-base-content/70 line-clamp-3 text-xs sm:text-sm">
           {note.content}
         </p>
-        <div className="card-actions justify-between items-center mt-4">
-          <span className="text-sm text-base-content/60">
+        <div className="card-actions justify-between items-center mt-3 sm:mt-4">
+          <span className="text-xs sm:text-sm text-base-content/60">
             {formatDate(new Date(note.createdAt))}
           </span>
-          <div className="flex items-center gap-2">
-            <PenSquareIcon className="size-4" />
+          <div className="flex items-center gap-1 sm:gap-2">
+            <PenSquareIcon className="size-3 sm:size-4 text-base-content/60" />
             <button
-              className="btn btn-ghost btn-xs text-error"
+              className="btn btn-ghost btn-xs text-error p-1 sm:p-2"
               onClick={(e) => handleDelete(e, note._id)}
             >
-              <Trash2Icon className="size-4" />
+              <Trash2Icon className="size-3 sm:size-4" />
             </button>
           </div>
         </div>
