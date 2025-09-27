@@ -255,7 +255,7 @@ fly logs
   fly logs    # Check for any errors or confirm successful startup
   ```
 
-Your backend will be available at: `https://your-app-name.fly.dev`
+Your backend will be available at: `https://your-app-name-backend.fly.dev`
 
 ### 1.10 Test API Endpoints
 
@@ -264,18 +264,18 @@ Verify your backend is working correctly by testing the API endpoints:
 **Method 1: Browser Testing (Easiest)**
 Visit these URLs in your browser:
 
-- **Root API Info**: `https://your-app-name.fly.dev/`
-- **Health Check**: `https://your-app-name.fly.dev/health`
-- **Notes API**: `https://your-app-name.fly.dev/api/notes`
+- **Root API Info**: `https://your-app-name-backend.fly.dev/`
+- **Health Check**: `https://your-app-name-backend.fly.dev/health`
+- **Notes API**: `https://your-app-name-backend.fly.dev/api/notes`
 
 **Method 2: Command Line Testing**
 
 ```bash
 # Test health endpoint
-curl https://your-app-name.fly.dev/health
+curl https://your-app-name-backend.fly.dev/health
 
 # Test notes endpoint
-curl https://your-app-name.fly.dev/api/notes
+curl https://your-app-name-backend.fly.dev/api/notes
 ```
 
 **Expected Results:**
@@ -544,7 +544,7 @@ fly scale count 1          # Scale to 1 instance (free tier)
 Once deployed, your app will be available at:
 
 - **Frontend**: `https://your-app-name.vercel.app`
-- **Backend**: `https://your-app-name.fly.dev`
+- **Backend**: `https://your-app-name-backend.fly.dev`
 
 ---
 
