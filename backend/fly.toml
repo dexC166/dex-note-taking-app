@@ -1,28 +1,101 @@
+# Fly.io Configuration for Dex Note Taking App Backend
+# 
+# This configuration file defines how the Express.js backend API is deployed
+# and managed on Fly.io. It specifies the application settings, resource allocation,
+# health monitoring, and networking configuration for the containerized backend.
+#
+# The configuration is optimized for:
+# - Free tier deployment with cost-effective resource usage
+# - Automatic scaling and machine management
+# - Health monitoring and automatic recovery
+# - HTTPS enforcement for secure communication
+#
+# @author Dayle Cortes
+# @version 1.0.0
+
+# Application name - must be unique across all Fly.io apps
+# This name is used to generate the public URL: https://dex-note-taking-app-backend.fly.dev
 app = "dex-note-taking-app-backend"
+
+# Primary deployment region - "iad" is Virginia, USA
+# Choose a region close to your users for optimal performance
+# Other options: "lax" (Los Angeles), "ord" (Chicago), "lhr" (London), etc.
 primary_region = "iad"
 
+# Build configuration section
+# Empty build section uses the Dockerfile in the same directory
+# Fly.io will automatically detect and use the Dockerfile for building the container
 [build]
 
+# Environment variables for the application
+# These are set at the container level and override any .env file values
 [env]
+  # Port configuration - must match the port exposed in Dockerfile and used in server.js
   PORT = "8080"
+  
+  # Production environment flag - enables production optimizations and error handling
   NODE_ENV = "production"
 
+# HTTP service configuration for handling web requests
+# This section defines how Fly.io routes external traffic to the application
 [http_service]
+  # Internal port that the application listens on inside the container
+  # Must match the PORT environment variable and the port exposed in Dockerfile
   internal_port = 8080
+  
+  # Force HTTPS for all incoming requests - redirects HTTP to HTTPS automatically
+  # Essential for security and required for modern web applications
   force_https = true
+  
+  # Auto-stop machines when no traffic is detected - saves costs on free tier
+  # Machines will automatically stop after a period of inactivity
   auto_stop_machines = true
+  
+  # Auto-start machines when traffic arrives - ensures availability
+  # Machines will automatically start when new requests come in
   auto_start_machines = true
+  
+  # Minimum number of machines to keep running - 0 for cost optimization
+  # With auto-stop/start enabled, this allows all machines to stop when idle
   min_machines_running = 0
+  
+  # Process names for the application - matches the CMD in Dockerfile
   processes = ["app"]
 
+# Health check configuration for monitoring application health
+# Fly.io uses these checks to determine if the application is running properly
+# and can automatically restart unhealthy containers
 [[http_service.checks]]
+  # Grace period before health checks start - allows time for application startup
+  # Gives the application 10 seconds to fully initialize before monitoring begins
   grace_period = "10s"
+  
+  # Check interval - how often to perform health checks
+  # Checks every 30 seconds to balance monitoring frequency with resource usage
   interval = "30s"
+  
+  # HTTP method for health checks - GET request to the health endpoint
   method = "GET"
+  
+  # Timeout for health check requests - maximum time to wait for response
+  # 5 seconds timeout ensures quick detection of unresponsive applications
   timeout = "5s"
+  
+  # Health check endpoint path - must match the route defined in server.js
+  # This endpoint returns a 200 status when the application is healthy
   path = "/health"
 
+# Virtual machine resource configuration
+# Defines the compute resources allocated to each application instance
 [[vm]]
+  # CPU type - "shared" provides cost-effective shared CPU resources
+  # Suitable for small to medium applications with variable traffic
   cpu_kind = "shared"
+  
+  # Number of CPU cores allocated to each instance
+  # 1 CPU core is sufficient for the Express.js API with moderate traffic
   cpus = 1
+  
+  # Memory allocation in megabytes - 256MB is the minimum for Node.js applications
+  # This is optimized for the free tier while providing enough memory for the API
   memory_mb = 256

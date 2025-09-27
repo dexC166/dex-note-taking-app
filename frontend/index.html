@@ -1,13 +1,57 @@
+<!--
+  Main HTML Entry Point for Dex Note Taking App Frontend
+  
+  This HTML file serves as the foundation for the React-based frontend application.
+  It provides the basic HTML structure and loads the React application through
+  Vite's development server and build process. The file is optimized for modern
+  web development with proper meta tags, responsive design, and ES module support.
+  
+  Key Features:
+  - React 19 with modern hooks and features
+  - Vite build tool for fast development and optimized production builds
+  - Tailwind CSS for utility-first styling
+  - React Router for client-side navigation
+  - Responsive design for all device sizes
+  - Toast notifications for user feedback
+  - Rate limiting UI for API protection
+  
+  @author Dayle Cortes
+  @version 1.0.0
+-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Character encoding declaration for proper text rendering -->
+    <!-- UTF-8 ensures support for international characters and emojis -->
     <meta charset="UTF-8" />
+
+    <!-- Favicon configuration using SVG format -->
+    <!-- The notebook.svg icon represents the note-taking functionality -->
+    <!-- SVG format provides crisp rendering at all sizes and supports theming -->
     <link rel="icon" type="image/svg+xml" href="/notebook.svg" />
+
+    <!-- Viewport meta tag for responsive design -->
+    <!-- Essential for mobile-first design and proper scaling on all devices -->
+    <!-- width=device-width ensures the viewport matches the device width -->
+    <!-- initial-scale=1.0 prevents zooming on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Page title displayed in browser tabs and bookmarks -->
+    <!-- Matches the application name for consistency and branding -->
     <title>Dex-Note-Taking-App</title>
   </head>
   <body>
+    <!-- React application mount point -->
+    <!-- This div serves as the container where React will render the entire application -->
+    <!-- The ID "root" is the standard convention for React applications -->
+    <!-- React's createRoot() function targets this element to mount the component tree -->
     <div id="root"></div>
+
+    <!-- Main application entry point script -->
+    <!-- type="module" enables ES6 module syntax and modern JavaScript features -->
+    <!-- The /src/main.jsx file contains the React application initialization code -->
+    <!-- Vite processes this file and handles the module resolution and bundling -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

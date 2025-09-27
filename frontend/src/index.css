@@ -1,30 +1,143 @@
+/**
+ * @fileoverview Main CSS file for the Dex Note Taking App frontend.
+ * 
+ * This file serves as the central stylesheet that imports Tailwind CSS directives
+ * and provides custom styles for the application. It focuses on mobile-first
+ * optimization, accessibility, and user experience enhancements. The file
+ * combines Tailwind's utility classes with custom CSS to create a cohesive
+ * design system.
+ * 
+ * Key Features:
+ * - Tailwind CSS integration with base, components, and utilities
+ * - Mobile-first responsive design optimization
+ * - Touch-friendly interface improvements
+ * - Custom text truncation utilities
+ * - Font rendering optimization for better readability
+ * - Accessibility enhancements for mobile devices
+ * 
+ * @author Dayle Cortes
+ * @version 1.0.0
+ */
+
+/* Tailwind CSS directives for utility-first styling */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Mobile-first optimization */
+/**
+ * Mobile-first optimization and base styles.
+ * 
+ * This layer contains custom base styles that enhance the mobile experience
+ * and provide consistent styling across all devices. The styles focus on
+ * touch interactions, text rendering, and responsive design patterns
+ * that work well on both mobile and desktop devices.
+ * 
+ * Why mobile-first?
+ * - User base: Most users access note-taking apps on mobile devices
+ * - Touch interactions: Mobile requires larger touch targets and better UX
+ * - Performance: Mobile-first approach ensures fast loading on slower devices
+ * - Accessibility: Better touch targets improve accessibility for all users
+ * - Progressive enhancement: Desktop gets enhanced experience, mobile gets optimized
+ */
 @layer base {
+  /**
+   * HTML element base styles for mobile optimization.
+   * 
+   * These styles prevent horizontal scrolling issues and remove the default
+   * tap highlight color that appears on mobile devices when tapping elements.
+   * This creates a cleaner, more native app-like experience.
+   * 
+   * Why these styles?
+   * - overflow-x: hidden: Prevents horizontal scrolling on mobile devices
+   * - -webkit-tap-highlight-color: transparent: Removes blue highlight on tap
+   * - Mobile UX: Creates cleaner, more professional mobile experience
+   * - Cross-browser: Works consistently across different mobile browsers
+   */
   html {
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
   }
 
+  /**
+   * Body element with antialiased text rendering.
+   * 
+   * Applies Tailwind's antialiased utility to improve text rendering
+   * across all devices, making text appear smoother and more readable.
+   * This is especially important for the note-taking interface where
+   * text readability is crucial.
+   * 
+   * Why antialiased?
+   * - Text clarity: Makes text appear smoother and more readable
+   * - Cross-platform: Consistent rendering across different devices
+   * - User experience: Better readability for note content
+   * - Modern browsers: Leverages modern font rendering capabilities
+   */
   body {
     @apply antialiased;
   }
 
-  /* Ensure proper text rendering on mobile */
+  /**
+   * Universal font smoothing for all elements.
+   * 
+   * Applies font smoothing to all elements to ensure consistent text
+   * rendering across different browsers and operating systems. This
+   * is particularly important for mobile devices where text rendering
+   * can vary significantly.
+   * 
+   * Why font smoothing?
+   * - Consistency: Uniform text rendering across all browsers
+   * - Readability: Smoother text appearance improves readability
+   * - Cross-platform: Works on both WebKit and Gecko browsers
+   * - Mobile optimization: Better text rendering on mobile devices
+   */
   * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Better touch targets for mobile */
+  /**
+   * Custom button sizing for better touch targets.
+   * 
+   * Ensures all buttons have minimum dimensions that meet accessibility
+   * guidelines for touch targets. This is crucial for mobile usability
+   * and provides a consistent button experience across the application.
+   * 
+   * Why these dimensions?
+   * - Accessibility: 2.5rem (40px) meets WCAG touch target guidelines
+   * - Mobile UX: Large enough for easy finger interaction
+   * - Consistency: Uniform button sizing across all components
+   * - DaisyUI integration: Works well with DaisyUI button components
+   * - Touch-friendly: Prevents accidental taps and improves usability
+   * 
+   * Usage: Applied to all .btn elements throughout the application
+   */
   .btn {
     @apply min-h-[2.5rem] min-w-[2.5rem];
   }
 
-  /* Responsive text truncation */
+  /**
+   * Responsive text truncation utilities.
+   * 
+   * Provides custom line-clamp utilities for truncating text content
+   * in note cards and other components. These utilities ensure consistent
+   * text truncation across different browsers and provide better control
+   * over text overflow in responsive layouts.
+   * 
+   * Why custom line-clamp?
+   * - Browser support: Works in older browsers that don't support CSS line-clamp
+   * - Consistency: Uniform text truncation across all components
+   * - Control: Fine-grained control over text overflow behavior
+   * - Mobile optimization: Prevents layout issues on small screens
+   * - Note cards: Essential for displaying note titles and content previews
+   * 
+   * Usage in components:
+   * - .line-clamp-2: Used for note titles in NoteCard component
+   * - .line-clamp-3: Used for note content previews in NoteCard component
+   * - Responsive design: Prevents text overflow in grid layouts
+   * - User experience: Provides clean, consistent note card appearance
+   * 
+   * @see {@link ../components/NoteCard.jsx} NoteCard component that uses these classes
+   */
   .line-clamp-2,
   .line-clamp-3 {
     display: -webkit-box;
