@@ -70,9 +70,9 @@ import { ZapIcon } from 'lucide-react';
  */
 const RateLimitedUI = () => {
   return (
-    <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
+    <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-8 w-full">
       {/* Main error state card with warning styling */}
-      <div className="bg-primary/10 border border-primary/30 rounded-lg shadow-md mx-3 sm:mx-0">
+      <div className="bg-primary/10 border border-primary/30 rounded-lg shadow-md w-full">
         <div className="flex flex-col md:flex-row items-center p-4 sm:p-6">
           {/* Icon container with warning background and lightning bolt icon */}
           <div className="flex-shrink-0 bg-primary/20 p-3 sm:p-4 rounded-full mb-3 sm:mb-4 md:mb-0 md:mr-6">

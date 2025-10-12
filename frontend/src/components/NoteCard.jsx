@@ -118,30 +118,30 @@ const NoteCard = ({ note, setNotes }) => {
     <Link
       to={`/note/${note._id}`}
       className="card bg-base-100 hover:shadow-lg active:shadow-xl transition-all duration-200 
-      border-t-4 border-solid border-[#66d9e8] h-full touch-manipulation"
+      border-t-4 border-solid border-[#66d9e8] h-full touch-manipulation w-full"
     >
-      <div className="card-body p-4 sm:p-5">
+      <div className="card-body p-3 sm:p-5">
         {/* Note title with responsive typography and text truncation */}
-        <h3 className="card-title text-base sm:text-lg md:text-xl line-clamp-2 mb-2">
+        <h3 className="card-title text-base sm:text-lg md:text-xl line-clamp-2 mb-2 break-words">
           {note.title}
         </h3>
         {/* Note content preview with responsive typography and text truncation */}
-        <p className="text-base-content/70 line-clamp-3 text-sm sm:text-base mb-3 sm:mb-4">
+        <p className="text-base-content/70 line-clamp-3 text-sm sm:text-base mb-3 sm:mb-4 break-words">
           {note.content}
         </p>
         {/* Card actions with date display and action buttons */}
-        <div className="card-actions justify-between items-center mt-auto pt-2">
+        <div className="card-actions justify-between items-center mt-auto pt-2 flex-wrap">
           {/* Formatted creation date */}
-          <span className="text-xs sm:text-sm text-base-content/60 font-medium">
+          <span className="text-xs sm:text-sm text-base-content/60 font-medium truncate">
             {formatDate(new Date(note.createdAt))}
           </span>
           {/* Action buttons for edit indicator and delete */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
             {/* Edit icon indicator */}
             <PenSquareIcon className="size-4 sm:size-5 text-base-content/60" />
             {/* Delete button with confirmation */}
             <button
-              className="btn btn-ghost btn-xs sm:btn-sm text-error p-2 min-h-[2rem] min-w-[2rem]"
+              className="btn btn-ghost btn-xs sm:btn-sm text-error p-1.5 min-h-[2rem] min-w-[2rem]"
               onClick={(e) => handleDelete(e, note._id)}
               aria-label="Delete note"
             >

@@ -196,13 +196,13 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200">
-      <div className="container mx-auto px-4 sm:px-5 md:px-6 py-5 sm:py-6 md:py-8">
+    <div className="min-h-screen bg-base-200 w-full overflow-x-hidden">
+      <div className="container mx-auto px-3 sm:px-5 md:px-6 py-4 sm:py-6 md:py-8">
         <div className="max-w-2xl mx-auto">
           {/* Navigation link back to home page */}
           <Link
             to={'/'}
-            className="btn btn-ghost btn-sm sm:btn-md mb-5 sm:mb-6 touch-manipulation"
+            className="btn btn-ghost btn-sm sm:btn-md mb-4 sm:mb-6 touch-manipulation"
           >
             <ArrowLeftIcon className="size-4 sm:size-5" />
             <span className="hidden sm:inline">Back to Notes</span>
@@ -210,8 +210,8 @@ const CreatePage = () => {
           </Link>
 
           {/* Main form card container */}
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body p-5 sm:p-6 md:p-8">
+          <div className="card bg-base-100 shadow-xl w-full">
+            <div className="card-body p-4 sm:p-6 md:p-8">
               <h2 className="card-title text-xl sm:text-2xl md:text-3xl mb-5 sm:mb-6">
                 Create New Note
               </h2>

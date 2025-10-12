@@ -52,7 +52,7 @@ import NoteDetailPage from './pages/NoteDetailPage';
  */
 const App = () => {
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen w-full overflow-x-hidden">
       {/* Custom radial gradient background for visual appeal */}
       <div className="fixed inset-0 -z-10 h-full w-full [background:radial-gradient(125%_125%_at_50%_10%,#000_60%,#1864ab_100%)]" />
 

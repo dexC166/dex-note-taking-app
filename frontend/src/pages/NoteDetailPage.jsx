@@ -292,11 +292,11 @@ const NoteDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-base-200">
-      <div className="container mx-auto px-4 sm:px-5 md:px-6 py-5 sm:py-6 md:py-8">
+    <div className="min-h-screen bg-base-200 w-full overflow-x-hidden">
+      <div className="container mx-auto px-3 sm:px-5 md:px-6 py-4 sm:py-6 md:py-8">
         <div className="max-w-2xl mx-auto">
           {/* Navigation and action buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4 mb-4 sm:mb-6">
             {/* Back to home page link */}
             <Link
               to="/"
@@ -318,8 +318,8 @@ const NoteDetailPage = () => {
           </div>
 
           {/* Main form card container */}
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body p-5 sm:p-6 md:p-8">
+          <div className="card bg-base-100 shadow-xl w-full">
+            <div className="card-body p-4 sm:p-6 md:p-8">
               {/* Title input field */}
               <div className="form-control mb-5 sm:mb-6">
                 <label className="label">
