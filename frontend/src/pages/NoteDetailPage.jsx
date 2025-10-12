@@ -293,12 +293,15 @@ const NoteDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-base-200">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+      <div className="container mx-auto px-4 sm:px-5 md:px-6 py-5 sm:py-6 md:py-8">
         <div className="max-w-2xl mx-auto">
           {/* Navigation and action buttons */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-6">
             {/* Back to home page link */}
-            <Link to="/" className="btn btn-ghost btn-sm sm:btn-md">
+            <Link
+              to="/"
+              className="btn btn-ghost btn-sm sm:btn-md touch-manipulation"
+            >
               <ArrowLeftIcon className="size-4 sm:size-5" />
               <span className="hidden sm:inline">Back to Notes</span>
               <span className="sm:hidden">Back</span>
@@ -306,7 +309,7 @@ const NoteDetailPage = () => {
             {/* Delete note button */}
             <button
               onClick={handleDelete}
-              className="btn btn-error btn-outline btn-sm sm:btn-md"
+              className="btn btn-error btn-outline btn-sm sm:btn-md touch-manipulation"
             >
               <Trash2Icon className="size-4 sm:size-5" />
               <span className="hidden sm:inline">Delete Note</span>
@@ -315,30 +318,34 @@ const NoteDetailPage = () => {
           </div>
 
           {/* Main form card container */}
-          <div className="card bg-base-100">
-            <div className="card-body p-4 sm:p-6">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body p-5 sm:p-6 md:p-8">
               {/* Title input field */}
-              <div className="form-control mb-4">
+              <div className="form-control mb-5 sm:mb-6">
                 <label className="label">
-                  <span className="label-text">Title</span>
+                  <span className="label-text text-base sm:text-lg font-medium">
+                    Title
+                  </span>
                 </label>
                 <input
                   type="text"
                   placeholder="Note title"
-                  className="input input-bordered"
+                  className="input input-bordered text-base w-full"
                   value={note.title}
                   onChange={(e) => setNote({ ...note, title: e.target.value })}
                 />
               </div>
 
               {/* Content textarea field */}
-              <div className="form-control mb-4">
+              <div className="form-control mb-6 sm:mb-8">
                 <label className="label">
-                  <span className="label-text">Content</span>
+                  <span className="label-text text-base sm:text-lg font-medium">
+                    Content
+                  </span>
                 </label>
                 <textarea
                   placeholder="Write your note here..."
-                  className="textarea textarea-bordered h-32 sm:h-40"
+                  className="textarea textarea-bordered text-base h-40 sm:h-48 md:h-56 w-full"
                   value={note.content}
                   onChange={(e) =>
                     setNote({ ...note, content: e.target.value })
@@ -349,13 +356,13 @@ const NoteDetailPage = () => {
               {/* Save button with loading state */}
               <div className="card-actions justify-end">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-md sm:btn-lg text-base sm:text-lg touch-manipulation"
                   disabled={saving}
                   onClick={handleSave}
                 >
                   {saving ? (
                     <>
-                      <span className="loading loading-spinner loading-sm"></span>
+                      <span className="loading loading-spinner loading-sm sm:loading-md"></span>
                       Saving...
                     </>
                   ) : (

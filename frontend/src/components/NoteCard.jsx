@@ -117,34 +117,35 @@ const NoteCard = ({ note, setNotes }) => {
   return (
     <Link
       to={`/note/${note._id}`}
-      className="card bg-base-100 hover:shadow-lg transition-all duration-200 
-      border-t-4 border-solid border-[#66d9e8] h-full"
+      className="card bg-base-100 hover:shadow-lg active:shadow-xl transition-all duration-200 
+      border-t-4 border-solid border-[#66d9e8] h-full touch-manipulation"
     >
-      <div className="card-body p-3 sm:p-4">
+      <div className="card-body p-4 sm:p-5">
         {/* Note title with responsive typography and text truncation */}
-        <h3 className="card-title text-base sm:text-lg line-clamp-2">
+        <h3 className="card-title text-base sm:text-lg md:text-xl line-clamp-2 mb-2">
           {note.title}
         </h3>
         {/* Note content preview with responsive typography and text truncation */}
-        <p className="text-base-content/70 line-clamp-3 text-xs sm:text-sm">
+        <p className="text-base-content/70 line-clamp-3 text-sm sm:text-base mb-3 sm:mb-4">
           {note.content}
         </p>
         {/* Card actions with date display and action buttons */}
-        <div className="card-actions justify-between items-center mt-3 sm:mt-4">
+        <div className="card-actions justify-between items-center mt-auto pt-2">
           {/* Formatted creation date */}
-          <span className="text-xs sm:text-sm text-base-content/60">
+          <span className="text-xs sm:text-sm text-base-content/60 font-medium">
             {formatDate(new Date(note.createdAt))}
           </span>
           {/* Action buttons for edit indicator and delete */}
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Edit icon indicator */}
-            <PenSquareIcon className="size-3 sm:size-4 text-base-content/60" />
+            <PenSquareIcon className="size-4 sm:size-5 text-base-content/60" />
             {/* Delete button with confirmation */}
             <button
-              className="btn btn-ghost btn-xs text-error p-1 sm:p-2"
+              className="btn btn-ghost btn-xs sm:btn-sm text-error p-2 min-h-[2rem] min-w-[2rem]"
               onClick={(e) => handleDelete(e, note._id)}
+              aria-label="Delete note"
             >
-              <Trash2Icon className="size-3 sm:size-4" />
+              <Trash2Icon className="size-4 sm:size-5" />
             </button>
           </div>
         </div>

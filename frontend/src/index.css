@@ -52,10 +52,14 @@
    * - -webkit-tap-highlight-color: transparent: Removes blue highlight on tap
    * - Mobile UX: Creates cleaner, more professional mobile experience
    * - Cross-browser: Works consistently across different mobile browsers
+   * - Text size adjust: Prevents text inflation on mobile devices
    */
   html {
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   /**
@@ -144,5 +148,72 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
+  }
+
+  /**
+   * Mobile-specific improvements for better touch interactions.
+   * 
+   * These styles enhance the mobile experience by ensuring proper
+   * touch target sizes, smooth scrolling, and preventing text selection
+   * issues on mobile devices.
+   * 
+   * Why these styles?
+   * - Touch target sizes: Ensures buttons and links are easy to tap
+   * - Smooth scrolling: Better user experience when navigating
+   * - Selection control: Prevents accidental text selection on tap
+   * - Form optimization: Better form inputs on mobile devices
+   */
+  @media (max-width: 640px) {
+    /* Improve button touch targets on mobile */
+    .btn {
+      @apply min-h-[2.75rem];
+    }
+
+    /* Ensure card links have adequate touch targets */
+    .card {
+      @apply min-h-[100px];
+    }
+
+    /* Optimize form inputs for mobile */
+    .input,
+    .textarea {
+      @apply text-base; /* Prevents zoom on iOS */
+    }
+
+    /* Better spacing for mobile content */
+    .card-body {
+      @apply p-3;
+    }
+
+    /* Improve mobile text readability */
+    p,
+    li {
+      @apply text-sm;
+    }
+  }
+
+  /**
+   * Smooth scrolling for better UX.
+   * 
+   * Adds smooth scrolling behavior to the entire document for a
+   * more polished and native app-like experience when navigating.
+   */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /**
+   * Optimize font rendering for mobile devices.
+   * 
+   * Uses optimizeLegibility for better text rendering on mobile
+   * devices, especially for headings and important text.
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-rendering: optimizeLegibility;
   }
 }

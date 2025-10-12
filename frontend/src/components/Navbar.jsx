@@ -59,16 +59,21 @@ const Navbar = () => {
   return (
     <header className="bg-base-300 border-b border-base-content/10">
       <div className="mx-auto max-w-6xl px-3 sm:px-4 py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
           {/* App title with responsive typography and branding */}
-          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-primary font-mono tracking-tight truncate">
-            Dex-Note-Taking-App
+          {/* Mobile: Shows shorter "Dex-Note" | Desktop: Shows full name */}
+          <h1 className="text-base sm:text-xl md:text-2xl font-bold text-primary font-mono tracking-tight flex-shrink min-w-0">
+            <span className="block sm:hidden">Dex-Note</span>
+            <span className="hidden sm:block">Dex-Note-Taking-App</span>
           </h1>
           {/* Primary action button for creating new notes */}
-          <Link to={'/create'} className="btn btn-primary btn-sm sm:btn-md">
+          <Link
+            to={'/create'}
+            className="btn btn-primary btn-sm sm:btn-md flex-shrink-0"
+          >
             <PlusIcon className="size-4 sm:size-5" />
             <span className="hidden sm:inline">New Note</span>
-            <span className="sm:hidden">New</span>
+            <span className="inline sm:hidden">New</span>
           </Link>
         </div>
       </div>

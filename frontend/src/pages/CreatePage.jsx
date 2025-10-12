@@ -197,12 +197,12 @@ const CreatePage = () => {
 
   return (
     <div className="min-h-screen bg-base-200">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+      <div className="container mx-auto px-4 sm:px-5 md:px-6 py-5 sm:py-6 md:py-8">
         <div className="max-w-2xl mx-auto">
           {/* Navigation link back to home page */}
           <Link
             to={'/'}
-            className="btn btn-ghost btn-sm sm:btn-md mb-4 sm:mb-6"
+            className="btn btn-ghost btn-sm sm:btn-md mb-5 sm:mb-6 touch-manipulation"
           >
             <ArrowLeftIcon className="size-4 sm:size-5" />
             <span className="hidden sm:inline">Back to Notes</span>
@@ -210,34 +210,38 @@ const CreatePage = () => {
           </Link>
 
           {/* Main form card container */}
-          <div className="card bg-base-100">
-            <div className="card-body p-4 sm:p-6">
-              <h2 className="card-title text-lg sm:text-xl md:text-2xl mb-4">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body p-5 sm:p-6 md:p-8">
+              <h2 className="card-title text-xl sm:text-2xl md:text-3xl mb-5 sm:mb-6">
                 Create New Note
               </h2>
               <form onSubmit={handleSubmit}>
                 {/* Title input field */}
-                <div className="form-control mb-4">
+                <div className="form-control mb-5 sm:mb-6">
                   <label className="label">
-                    <span className="label-text">Title</span>
+                    <span className="label-text text-base sm:text-lg font-medium">
+                      Title
+                    </span>
                   </label>
                   <input
                     type="text"
                     placeholder="Note Title"
-                    className="input input-bordered"
+                    className="input input-bordered text-base w-full"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
 
                 {/* Content textarea field */}
-                <div className="form-control mb-4">
+                <div className="form-control mb-6 sm:mb-8">
                   <label className="label">
-                    <span className="label-text">Content</span>
+                    <span className="label-text text-base sm:text-lg font-medium">
+                      Content
+                    </span>
                   </label>
                   <textarea
                     placeholder="Write your note here..."
-                    className="textarea textarea-bordered h-32 sm:h-40"
+                    className="textarea textarea-bordered text-base h-40 sm:h-48 md:h-56 w-full"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                   />
@@ -247,12 +251,12 @@ const CreatePage = () => {
                 <div className="card-actions justify-end">
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-md sm:btn-lg text-base sm:text-lg touch-manipulation"
                     disabled={loading}
                   >
                     {loading ? (
                       <>
-                        <span className="loading loading-spinner loading-sm"></span>
+                        <span className="loading loading-spinner loading-sm sm:loading-md"></span>
                         Creating...
                       </>
                     ) : (

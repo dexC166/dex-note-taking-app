@@ -35,7 +35,23 @@
     <!-- Essential for mobile-first design and proper scaling on all devices -->
     <!-- width=device-width ensures the viewport matches the device width -->
     <!-- initial-scale=1.0 prevents zooming on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- maximum-scale=5.0 allows reasonable zooming for accessibility -->
+    <!-- user-scalable=yes ensures users can zoom for accessibility -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+
+    <!-- Mobile web app capable for better mobile experience -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#1864ab" />
 
     <!-- Page title displayed in browser tabs and bookmarks -->
     <!-- Matches the application name for consistency and branding -->

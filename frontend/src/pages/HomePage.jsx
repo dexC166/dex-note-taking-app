@@ -183,12 +183,14 @@ const HomePage = () => {
       {isRateLimited && <RateLimitedUI />}
 
       {/* Main content area with responsive container */}
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5 md:px-6 py-5 sm:py-6 md:py-8">
         {/* Loading state with spinner and message */}
         {loading && (
-          <div className="text-center text-primary py-8 sm:py-10">
+          <div className="text-center text-primary py-10 sm:py-12 md:py-16">
             <span className="loading loading-dots loading-lg"></span>
-            <p className="mt-2 text-sm sm:text-base">Loading notes...</p>
+            <p className="mt-3 text-base sm:text-lg font-medium">
+              Loading notes...
+            </p>
           </div>
         )}
 
@@ -197,7 +199,7 @@ const HomePage = () => {
 
         {/* Notes grid shown when notes exist and not rate limited */}
         {notes.length > 0 && !isRateLimited && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
             {notes.map((note) => (
               <NoteCard key={note._id} note={note} setNotes={setNotes} />
             ))}
