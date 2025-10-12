@@ -78,6 +78,7 @@
    */
   body {
     @apply antialiased;
+    overflow-x: hidden;
   }
 
   /**
