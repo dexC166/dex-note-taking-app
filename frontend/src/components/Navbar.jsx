@@ -69,7 +69,7 @@ const Navbar = () => {
           {/* Primary action button for creating new notes */}
           <Link
             to={'/create'}
-            className="btn btn-primary btn-sm sm:btn-md flex-shrink-0 min-w-fit"
+            className="btn btn-primary btn-sm sm:btn-md shrink-0"
           >
             <PlusIcon className="size-4 sm:size-5" />
             <span className="hidden sm:inline">New Note</span>
